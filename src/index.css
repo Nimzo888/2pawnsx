@@ -1,0 +1,119 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 240 20% 13%;
+    --foreground: 0 0% 94%;
+
+    --card: 240 15% 17%;
+    --card-foreground: 0 0% 94%;
+
+    --popover: 240 15% 17%;
+    --popover-foreground: 0 0% 94%;
+
+    --primary: 225 55% 52%;
+    --primary-foreground: 0 0% 94%;
+
+    --secondary: 150 50% 37%;
+    --secondary-foreground: 0 0% 94%;
+
+    --muted: 240 10% 20%;
+    --muted-foreground: 240 5% 69%;
+
+    --accent: 240 10% 20%;
+    --accent-foreground: 0 0% 94%;
+
+    --destructive: 0 60% 50%;
+    --destructive-foreground: 0 0% 94%;
+
+    --border: 240 10% 25%;
+    --input: 240 10% 25%;
+    --ring: 225 55% 52%;
+
+    --radius: 0.25rem;
+
+    /* Chess specific colors */
+    --chess-white-square: 36 60% 82%;
+    --chess-black-square: 25 30% 55%;
+    --move-highlight: 225 55% 52%;
+    --good-move: 150 50% 37%;
+    --bad-move: 0 60% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings:
+      "rlig" 1,
+      "calt" 1;
+  }
+}
+
+/* Custom styles for chess platform */
+.chess-board-container {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.chess-white-square {
+  background-color: hsl(var(--chess-white-square));
+}
+
+.chess-black-square {
+  background-color: hsl(var(--chess-black-square));
+}
+
+.move-highlight {
+  background-color: hsla(var(--move-highlight), 0.3);
+}
+
+.good-move-highlight {
+  background-color: hsla(var(--good-move), 0.4);
+}
+
+.bad-move-highlight {
+  background-color: hsla(var(--destructive), 0.4);
+}
+
+.evaluation-bar {
+  background: linear-gradient(
+    to bottom,
+    hsl(var(--good-move)),
+    hsl(var(--destructive))
+  );
+}
+
+.social-card {
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.social-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.nav-item.active {
+  background-color: hsla(var(--primary), 0.2);
+  color: hsl(var(--primary));
+}
+
+.premium-badge {
+  background: linear-gradient(135deg, hsl(var(--primary)), hsl(270, 50%, 60%));
+}
+
+.chess-piece-bg {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 24 24' fill='none' stroke='%23333333' stroke-width='0.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 16l-1.447.724a1 1 0 00-.553.894V20h12v-2.382a1 1 0 00-.553-.894L16 16'/%3E%3Cpath d='M12 4v0a2 2 0 012 2v0a2 2 0 01-2 2h0a2 2 0 01-2-2v0a2 2 0 012-2z'/%3E%3Cpath d='M9 10h6'/%3E%3Cpath d='M12 8v4'/%3E%3Cpath d='M8 10v6'/%3E%3Cpath d='M16 10v6'/%3E%3Cpath d='M8 16h8'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 40px 40px;
+  background-position: center;
+  opacity: 0.05;
+}
