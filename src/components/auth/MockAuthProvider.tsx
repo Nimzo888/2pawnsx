@@ -40,4 +40,5 @@ export const MockAuthProvider: React.FC<{ children: React.ReactNode }> = ({
   );
 };
 
+// Add a default export that points to the same component
 export default MockAuthProvider;
