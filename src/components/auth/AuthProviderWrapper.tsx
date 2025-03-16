@@ -1,31 +1,17 @@
-import React, { Suspense } from "react";
-import { LoadingSpinner } from "@/components/common/LoadingSpinner";
-
-// Dynamically import the AuthProvider to avoid HMR issues
-const AuthProvider = React.lazy(() =>
-  import("./AuthProvider").then((module) => ({
-    default: module.AuthProvider,
-  })),
-);
+import React from "react";
+import { AuthProvider } from "./AuthProvider";
 
 /**
- * This wrapper component helps prevent HMR issues with the AuthProvider
- * by loading it lazily and providing a suspense fallback
+ * This wrapper component helps maintain a consistent API
+ * while removing the lazy loading that was causing HMR issues
+ *
+ * It also provides a stable reference that won't be affected by HMR
  */
 export const AuthProviderWrapper: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  return (
-    <Suspense
-      fallback={
-        <div className="flex h-screen w-full items-center justify-center">
-          <LoadingSpinner size="lg" />
-        </div>
-      }
-    >
-      <AuthProvider>{children}</AuthProvider>
-    </Suspense>
-  );
+  // Using a simple wrapper with no state or effects to avoid HMR issues
+  return <AuthProvider>{children}</AuthProvider>;
 };
 
 // Re-export the useAuth hook for convenience

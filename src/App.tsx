@@ -1,4 +1,4 @@
-import { Suspense, lazy } from "react";
+import { Suspense } from "react";
 import { useRoutes, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProviderWrapper as AuthProvider } from "./components/auth/AuthProviderWrapper";
 import routes from "tempo-routes";

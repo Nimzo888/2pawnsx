@@ -1,12 +1,12 @@
 import path from "path";
 import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react-swc";
+import react from "@vitejs/plugin-react";
 import { tempo } from "tempo-devtools/dist/vite";
 
-// Add this block of code for SWC plugin
+// Add this block of code for Babel plugin
 const conditionalPlugins = [];
 if (process.env.TEMPO === "true") {
-  conditionalPlugins.push(["tempo-devtools/swc", {}]);
+  conditionalPlugins.push("tempo-devtools/dist/babel-plugin");
 }
 
 // https://vitejs.dev/config/
@@ -23,18 +23,30 @@ export default defineConfig({
   },
   plugins: [
     react({
-      plugins: [...conditionalPlugins],
-      jsxImportSource: "react",
-      tsDecorators: true,
-      // Use custom HMR handling instead of SWC refresh
-      refresh: false,
+      // Use Babel for React Refresh
+      babel: {
+        plugins: [
+          ...conditionalPlugins,
+          // Add additional babel plugins if needed
+        ],
+        // Ensure we're using the correct preset versions
+        presets: [
+          ["@babel/preset-env", { targets: { node: "current" } }],
+          ["@babel/preset-react", { runtime: "automatic" }],
+          "@babel/preset-typescript",
+        ],
+      },
+      // Explicitly set the refresh implementation
+      fastRefresh: true,
     }),
     tempo(),
   ],
-  // Add custom HMR options
+  // Enhanced HMR options
   server: {
     hmr: {
       overlay: false, // Disable the default HMR overlay
+      // Increase timeout for HMR operations
+      timeout: 5000,
     },
     allowedHosts: process.env.TEMPO === "true" ? true : undefined,
   },
